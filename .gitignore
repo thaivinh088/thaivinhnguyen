@@ -4,3 +4,6 @@ dist/
 .env*
 .DS_Store
 *.log
+
+# Bàn giao giữa các phiên làm việc, không thuộc nội dung site
+HANDOFF.md
