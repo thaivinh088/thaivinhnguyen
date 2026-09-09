@@ -1,0 +1,15 @@
+{
+  "name": "vinh-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "fonts": "node scripts/fonts.mjs",
+    "shots": "node scripts/shots.mjs",
+    "brand": "node scripts/brand.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.48.0",
+    "sharp": "^0.33.5"
+  }
+}
