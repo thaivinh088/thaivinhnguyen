@@ -4,14 +4,11 @@
    ───────────────────────────────────────────────────────────── */
 
 /**
- * TODO — CHƯA CÓ DOMAIN.
- * Sau lần deploy đầu, Vercel cho một URL dạng https://<project>.vercel.app.
- * Dán URL đó vào đây (không có dấu / ở cuối) rồi chạy `npm run build`
- * và push lại. Bắt buộc phải làm trước khi chạy LinkedIn Post Inspector,
- * vì og:image phải là URL tuyệt đối đúng host (Mục 6.1 của brief).
- * Khi gắn domain riêng thì đổi tiếp sang domain đó.
+ * Domain đang phục vụ. Khi gắn domain riêng (vd thaivinhnguyen.com) thì đổi
+ * dòng này, chạy `npm run build`, push — canonical, og:url, og:image và
+ * sitemap đều bám theo. Không có dấu / ở cuối.
  */
-export const SITE_URL = 'https://TODO-CHUA-CO-DOMAIN.vercel.app';
+export const SITE_URL = 'https://thaivinhnguyen.vercel.app';
 
 /**
  * TODO — CHƯA CÓ GTM CONTAINER ID.
