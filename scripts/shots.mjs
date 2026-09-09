@@ -88,11 +88,18 @@ for (const site of targets) {
     await page.waitForTimeout(site.wait);
 
     const buf = await page.screenshot({ type: 'png' }); // viewport, KHÔNG fullPage
-    const file = `${OUT}/work-${site.slug}.webp`;
-    await sharp(buf).resize({ width: 1440 }).webp({ quality: 82 }).toFile(file);
 
-    const { size } = await stat(file);
-    console.log(`ok  ${file}  ${Math.round(size / 1024)}KB`);
+    // Hai cỡ cho srcset: 1440 cho desktop retina, 720 cho điện thoại.
+    // Không có bản 720 thì máy 412px vẫn phải tải ảnh 1440 — Lighthouse
+    // tính đó là ~190KB lãng phí.
+    const file = `${OUT}/work-${site.slug}.webp`;
+    const small = `${OUT}/work-${site.slug}-720.webp`;
+    await sharp(buf).resize({ width: 1440 }).webp({ quality: 82 }).toFile(file);
+    await sharp(buf).resize({ width: 720 }).webp({ quality: 80 }).toFile(small);
+
+    const big = (await stat(file)).size;
+    const sml = (await stat(small)).size;
+    console.log(`ok  work-${site.slug}  ${Math.round(big / 1024)}KB / ${Math.round(sml / 1024)}KB`);
   } catch (err) {
     failed++;
     console.log(`LỖI: ${err.message.split('\n')[0]}`);

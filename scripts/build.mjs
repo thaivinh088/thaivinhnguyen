@@ -163,6 +163,8 @@ const work = () => {
                   <span class="browser-url">${esc(proj.domain)}</span>
                 </div>
                 <img class="browser-shot" src="${ASSET[proj.slug]}" width="1440" height="900"
+                     srcset="${ASSET[proj.slug + '720']} 720w, ${ASSET[proj.slug]} 1440w"
+                     sizes="(min-width: 860px) 534px, calc(100vw - 66px)"
                      alt="${esc(proj.alt)}" data-i18n-attr="alt:work.projects[${i}].alt"
                      ${i === 0 ? 'decoding="async"' : 'loading="lazy" decoding="async"'}>
               </div>
@@ -316,13 +318,13 @@ const jsonLd = () =>
 
 /* ── Ghép trang ──────────────────────────────────────────── */
 
-const ASSET = {
-  portrait: await v('assets/img/portrait.jpg'),
-  shipstar: await v('assets/img/work-shipstar.webp'),
-  tpplasticusa: await v('assets/img/work-tpplasticusa.webp'),
-  obbgel: await v('assets/img/work-obbgel.webp'),
-  oceantrading: await v('assets/img/work-oceantrading.webp'),
-};
+/* Mỗi ảnh dự án có hai cỡ để srcset chọn: 1440 cho desktop retina,
+   720 cho điện thoại. Card rộng tối đa 534px trên desktop. */
+const ASSET = { portrait: await v('assets/img/portrait.jpg') };
+for (const slug of ['shipstar', 'tpplasticusa', 'obbgel', 'oceantrading']) {
+  ASSET[slug] = await v(`assets/img/work-${slug}.webp`);
+  ASSET[slug + '720'] = await v(`assets/img/work-${slug}-720.webp`);
+}
 
 /* ── CSS nhúng thẳng vào <head> ───────────────────────────────
    Bốn file CSS rời là bốn request chặn render. Nhúng vào một khối

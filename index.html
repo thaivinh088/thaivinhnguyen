@@ -277,18 +277,19 @@ main { display: block; }
 
 /* ── Chuyển động ─────────────────────────────────────────── */
 
-/* Fade-up khi section vào viewport. Bắt đầu từ trạng thái ĐÃ ĐỌC ĐƯỢC
-   (opacity .7), không parked ở 0 — nội dung phải thấy ngay khi load. */
+/* Trượt lên khi section vào viewport. CỐ Ý KHÔNG dùng opacity:
+   trạng thái nghỉ là thứ người không cuộn (và Lighthouse) nhìn thấy mãi mãi.
+   Từng để opacity .7 ở đây và nó kéo --ink-muted xuống 4.28:1 trên toàn
+   trang — trượt thuần thì tương phản không bao giờ phụ thuộc animation. */
 .reveal {
-  opacity: .7;
   transform: translateY(14px);
-  transition: opacity .55s var(--ease), transform .55s var(--ease);
+  transition: transform .55s var(--ease);
 }
-.reveal.is-in { opacity: 1; transform: none; }
+.reveal.is-in { transform: none; }
 
 /* Hero xuất hiện một lần khi load */
 @keyframes rise {
-  from { opacity: .55; transform: translateY(12px); }
+  from { opacity: .85; transform: translateY(12px); }
   to   { opacity: 1;   transform: none; }
 }
 .rise { animation: rise .55s var(--ease) both; }
@@ -304,7 +305,7 @@ main { display: block; }
     animation-iteration-count: 1 !important;
     transition-duration: .001ms !important;
   }
-  .reveal { opacity: 1; transform: none; }
+  .reveal { transform: none; }
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -1136,6 +1137,8 @@ main { display: block; }
                   <span class="browser-url">shipstar.vn</span>
                 </div>
                 <img class="browser-shot" src="/assets/img/work-shipstar.webp?v=d9e861e1" width="1440" height="900"
+                     srcset="/assets/img/work-shipstar-720.webp?v=21fe065f 720w, /assets/img/work-shipstar.webp?v=d9e861e1 1440w"
+                     sizes="(min-width: 860px) 534px, calc(100vw - 66px)"
                      alt="shipstar.vn homepage — cross-border 3PL fulfilment platform" data-i18n-attr="alt:work.projects[0].alt"
                      decoding="async">
               </div>
@@ -1159,6 +1162,8 @@ main { display: block; }
                   <span class="browser-url">tpplasticusa.com</span>
                 </div>
                 <img class="browser-shot" src="/assets/img/work-tpplasticusa.webp?v=8c2f5061" width="1440" height="900"
+                     srcset="/assets/img/work-tpplasticusa-720.webp?v=01336ac6 720w, /assets/img/work-tpplasticusa.webp?v=8c2f5061 1440w"
+                     sizes="(min-width: 860px) 534px, calc(100vw - 66px)"
                      alt="tpplasticusa.com homepage — B2B plastic packaging manufacturer site" data-i18n-attr="alt:work.projects[1].alt"
                      loading="lazy" decoding="async">
               </div>
@@ -1182,6 +1187,8 @@ main { display: block; }
                   <span class="browser-url">obbgel.com</span>
                 </div>
                 <img class="browser-shot" src="/assets/img/work-obbgel.webp?v=32ce1d6a" width="1440" height="900"
+                     srcset="/assets/img/work-obbgel-720.webp?v=38ca3b25 720w, /assets/img/work-obbgel.webp?v=32ce1d6a 1440w"
+                     sizes="(min-width: 860px) 534px, calc(100vw - 66px)"
                      alt="obbgel.com homepage — premium product website" data-i18n-attr="alt:work.projects[2].alt"
                      loading="lazy" decoding="async">
               </div>
@@ -1205,6 +1212,8 @@ main { display: block; }
                   <span class="browser-url">oceantradingexpress.com</span>
                 </div>
                 <img class="browser-shot" src="/assets/img/work-oceantrading.webp?v=f8ceba74" width="1440" height="900"
+                     srcset="/assets/img/work-oceantrading-720.webp?v=cfb3280a 720w, /assets/img/work-oceantrading.webp?v=f8ceba74 1440w"
+                     sizes="(min-width: 860px) 534px, calc(100vw - 66px)"
                      alt="oceantradingexpress.com landing page — international trading service" data-i18n-attr="alt:work.projects[3].alt"
                      loading="lazy" decoding="async">
               </div>

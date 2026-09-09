@@ -161,18 +161,19 @@ main { display: block; }
 
 /* ── Chuyển động ─────────────────────────────────────────── */
 
-/* Fade-up khi section vào viewport. Bắt đầu từ trạng thái ĐÃ ĐỌC ĐƯỢC
-   (opacity .7), không parked ở 0 — nội dung phải thấy ngay khi load. */
+/* Trượt lên khi section vào viewport. CỐ Ý KHÔNG dùng opacity:
+   trạng thái nghỉ là thứ người không cuộn (và Lighthouse) nhìn thấy mãi mãi.
+   Từng để opacity .7 ở đây và nó kéo --ink-muted xuống 4.28:1 trên toàn
+   trang — trượt thuần thì tương phản không bao giờ phụ thuộc animation. */
 .reveal {
-  opacity: .7;
   transform: translateY(14px);
-  transition: opacity .55s var(--ease), transform .55s var(--ease);
+  transition: transform .55s var(--ease);
 }
-.reveal.is-in { opacity: 1; transform: none; }
+.reveal.is-in { transform: none; }
 
 /* Hero xuất hiện một lần khi load */
 @keyframes rise {
-  from { opacity: .55; transform: translateY(12px); }
+  from { opacity: .85; transform: translateY(12px); }
   to   { opacity: 1;   transform: none; }
 }
 .rise { animation: rise .55s var(--ease) both; }
@@ -188,5 +189,5 @@ main { display: block; }
     animation-iteration-count: 1 !important;
     transition-duration: .001ms !important;
   }
-  .reveal { opacity: 1; transform: none; }
+  .reveal { transform: none; }
 }
