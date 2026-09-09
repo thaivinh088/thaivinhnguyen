@@ -96,3 +96,9 @@ và [PageSpeed Insights](https://pagespeed.web.dev/) trên URL production thật
   Việt mới kéo thêm phần vietnamese và latin-ext.
 - **Ngôn ngữ.** Mặc định EN và render sẵn trong HTML, nên Google/LinkedIn đọc được
   khi không chạy JS. VI nạp qua fetch khi bấm đổi hoặc mở `?lang=vi`.
+- **Đừng đặt `opacity` vào trạng thái nghỉ của `.reveal`.** Đã dính một lần: để
+  `opacity: .7` thì mọi section chưa cuộn tới đều hiện ở 70%, kéo `--ink-muted`
+  từ 7,5:1 xuống 4,28:1 và Lighthouse chấm trượt tương phản ở ~80 phần tử. Người
+  mở trang mà không cuộn cũng thấy y như vậy. Hiệu ứng vào section chỉ dùng
+  `transform`. Khi tự viết script đo tương phản, nhớ nhân opacity của cả cây cha
+  — đọc mỗi `getComputedStyle().color` sẽ không thấy lỗi này.
