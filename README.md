@@ -15,6 +15,11 @@ npm run build
 Sửa file JSON (hoặc file CSS) → chạy lệnh trên → commit cả `index.html` → push.
 Vercel không chạy build, nó phục vụ thẳng `index.html` đã commit.
 
+Push lên `main` là Vercel tự deploy (đã nối GitHub), branch khác được một preview
+URL riêng. Vì Vercel phục vụ `index.html` đã commit chứ không tự sinh lại, **quên
+`npm run build` là production im lặng phục vụ bản cũ** — không có lỗi nào báo.
+Deploy tay bằng `vercel --prod --yes` vẫn dùng được khi cần.
+
 Hai file JSON phải có **cùng bộ key**; `npm run build` sẽ báo nếu lệch.
 
 ## Bốn lệnh
@@ -44,9 +49,10 @@ và bong bóng chat (tawk.to, Zoho SalesIQ, WhatsApp, Zalo, Messenger).
 
 Cả hai thứ dưới đây nằm ở **một chỗ duy nhất**: [`site.config.mjs`](site.config.mjs).
 
-1. **Domain.** `SITE_URL` đang là `TODO`. Vercel cho URL `*.vercel.app` ngay sau
-   khi deploy — dán vào đó, chạy `npm run build`, push lại. Bắt buộc làm trước khi
-   chạy Post Inspector, vì `og:image` phải là URL tuyệt đối đúng host.
+1. **Domain.** Đã điền: `https://thaivinhnguyen.vercel.app`. Khi mua domain riêng
+   thì đổi đúng dòng đó, chạy `npm run build`, push, rồi thêm domain trong Vercel —
+   canonical, `og:url`, `og:image` và sitemap đều bám theo. Chỉ để **một** bản chính
+   phục vụ nội dung, bản kia redirect, rồi chạy lại Post Inspector với domain mới.
 2. **GTM.** `GTM_ID` đang trống nên snippet GTM chưa được nhúng (cố ý — không nhét
    ID giả). Điền `GTM-XXXXXXX` rồi `npm run build`. Các sự kiện `cv_download`,
    `work_link_click`, `contact_click`, `lang_switch` đã đẩy sẵn vào
