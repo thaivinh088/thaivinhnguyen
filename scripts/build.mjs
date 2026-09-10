@@ -279,7 +279,7 @@ const contact = () => {
           <p class="section-intro measure" ${t('contact.sub')}>${esc(c.sub)}</p>
           <div class="contact-list">
             ${row('contact.emailLabel', c.emailLabel, `<a href="mailto:${esc(c.email)}" data-track-contact="email" ${t('contact.email')}>${esc(c.email)}</a>`)}
-            ${row('contact.phoneLabel', c.phoneLabel, `<a href="tel:${esc(c.phoneHref)}" data-track-contact="phone" data-i18n-attr="href:contact.phoneHref" ${t('contact.phone')}>${esc(c.phone)}</a>`)}
+            ${row('contact.phoneLabel', c.phoneLabel, `<a href="${esc(c.phoneHref)}" data-track-contact="phone" data-i18n-attr="href:contact.phoneHref" ${t('contact.phone')}>${esc(c.phone)}</a>`)}
             ${row('contact.linkedinLabel', c.linkedinLabel, `<a href="${esc(c.linkedinUrl)}" target="_blank" rel="noopener me" data-track-contact="linkedin" ${t('contact.linkedin')}>${esc(c.linkedin)}</a>`)}
             ${row('contact.locationLabel', c.locationLabel, `<span class="contact-value--plain" ${t('contact.location')}>${esc(c.location)}</span>`)}
           </div>
