@@ -94,6 +94,12 @@ và [PageSpeed Insights](https://pagespeed.web.dev/) trên URL production thật
 - **Subset font.** Mỗi bộ chữ tách ba file theo `unicode-range`: latin, latin-ext,
   vietnamese. Người đọc bản tiếng Anh chỉ tải 3 file latin (~75KB); bấm sang tiếng
   Việt mới kéo thêm phần vietnamese và latin-ext.
+- **`lastmod` của sitemap bám nội dung, không bám ngày build.** `build.mjs` lấy
+  ngày commit cuối của `content/`, `styles/`, `assets/`, `scripts/ui.js`,
+  `scripts/i18n.js`, `scripts/build.mjs`, `site.config.mjs`; file nào đang sửa dở
+  thì lấy hôm nay. Trước đây dùng thẳng `new Date()` nên build lại mà không sửa gì
+  cũng ra diff giả trong `sitemap.xml` và báo với Google là trang vừa đổi. Thêm
+  file nguồn mới thì nhớ thêm vào mảng `SOURCES`.
 - **Ngôn ngữ.** Mặc định EN và render sẵn trong HTML, nên Google/LinkedIn đọc được
   khi không chạy JS. VI nạp qua fetch khi bấm đổi hoặc mở `?lang=vi`.
 - **Đừng đặt `opacity` vào trạng thái nghỉ của `.reveal`.** Đã dính một lần: để

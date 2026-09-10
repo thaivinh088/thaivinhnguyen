@@ -14,10 +14,13 @@
 
 import { readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { SITE_URL, GTM_ID } from '../site.config.mjs';
 
 const ROOT = new URL('..', import.meta.url);
 const p = rel => new URL(rel, ROOT);
+const ROOT_DIR = fileURLToPath(ROOT);
 
 const en = JSON.parse(await readFile(p('content/en.json'), 'utf8'));
 const vi = JSON.parse(await readFile(p('content/vi.json'), 'utf8'));
@@ -462,7 +465,38 @@ await writeFile(p('index.html'), html, 'utf8');
 
 /* ── sitemap.xml + robots.txt ────────────────────────────── */
 
-const today = new Date().toISOString().slice(0, 10);
+/* lastmod KHONG duoc lay theo ngay chay build: build lai ma khong sua gi
+   thi sitemap.xml co diff gia, va bao voi Google la trang vua doi trong khi
+   khong doi. Lay ngay commit cuoi cua nhung file that su tao nen trang; neu
+   file nao dang sua do (chua commit) thi dung hom nay, vi do chinh la ngay
+   noi dung doi. Khong co git (vd tai zip ve) thi lui ve hom nay.          */
+const SOURCES = [
+  'content',
+  'styles',
+  'assets',
+  'scripts/ui.js',
+  'scripts/i18n.js',
+  'scripts/build.mjs',
+  'site.config.mjs',
+];
+
+function contentDate() {
+  const today = new Date().toISOString().slice(0, 10);
+  const git = (...args) =>
+    execFileSync('git', args, {
+      cwd: ROOT_DIR,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+  try {
+    if (git('status', '--porcelain', '--', ...SOURCES)) return today;
+    return git('log', '-1', '--format=%cs', '--', ...SOURCES) || today;
+  } catch {
+    return today;
+  }
+}
+
+const lastmod = contentDate();
 
 await writeFile(
   p('sitemap.xml'),
@@ -471,7 +505,7 @@ await writeFile(
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>${base}/</loc>
-    <lastmod>${today}</lastmod>
+    <lastmod>${lastmod}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="${base}/"/>
